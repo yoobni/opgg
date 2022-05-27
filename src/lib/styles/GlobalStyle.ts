@@ -73,18 +73,18 @@ export default createGlobalStyle`
     }
     
     body {
-        font-family: Noto Sans KR, "sans-serif" !important;
+        font-family: 'Nanum Gothic', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
         background-color: #fff;
         color: #333c45;
         font-weight: 400;
     }
 
     :lang(ko) {
-        font-family: Noto Sans KR, "sans-serif";
+        font-family: 'Nanum Gothic', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
     }
     
     :lang(en) {
-        font-family: Noto Sans KR, "sans-serif";
+        font-family: 'Nanum Gothic', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
     }
 
     a {

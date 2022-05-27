@@ -1,13 +1,10 @@
+// Package
 import Head from 'next/head';
+import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components';
-
+// Lib
 import GlobalStyle from '../lib/styles/GlobalStyle';
 
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-
-// Font
-// Helvetica,"Malgun Gothic","Apple SD Gothic Neo",AppleGothic,Dotum,Arial,Tahoma
 const theme = {
     colors: {
         primary: '#0070f3',
@@ -27,6 +24,7 @@ function App({ Component, pageProps }: AppProps) {
                 <meta property="og:image" content="https://s-lol-web.op.gg/images/reverse.rectangle.png" />
                 <meta name="viewport" content="width=1000" />
                 <title>롤 전적 검색 OP.GG - 전적 검색, 관전, 리플레이, 챔피언 공략, 카운터, 랭킹</title>
+                <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet" />
             </Head>
             <GlobalStyle />
             <ThemeProvider theme={theme}>
