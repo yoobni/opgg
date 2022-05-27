@@ -1,5 +1,5 @@
 // Package
-import React from 'react';
+import React, {useEffect} from 'react';
 // Component
 import { Wrapper, GridWrapper, Row, Col, Text } from "../../components/Layout";
 import {
