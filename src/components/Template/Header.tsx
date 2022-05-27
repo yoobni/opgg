@@ -35,6 +35,8 @@ const SearchRow = styled(Row)`
 `;
 
 export default function Header() {
+    // const [searchKeyword, setSearchKeyword] = useState<string>('');
+
     return (
         <Wrapper
             padding={'53px 0 12px'}
@@ -46,8 +48,8 @@ export default function Header() {
                         <Input
                             name={'search'}
                             type={'text'}
-                            value={'소환사명, 챔피언...'}
-                            placeholder={'asd'}
+                            value={''}
+                            placeholder={'소환사명, 챔피언...'}
                         />
                     </Col>
                     <Col>

@@ -1,15 +1,17 @@
-// Set
-import React, { useEffect } from 'react';
+// Package
+import React from 'react';
+// Component
+import { Wrapper, GridWrapper, Text } from "../../components/Layout";
 
-function Home(props: any) {
-    useEffect(() => {
-
-    }, []);
-
+function Home() {
     return (
-        <>
-            init component
-        </>
+        <Wrapper height={'calc(100vh - 200px)'} padding={'100px 0'}>
+            <GridWrapper>
+                <Text>
+                    Home
+                </Text>
+            </GridWrapper>
+        </Wrapper>
     );
 }
 

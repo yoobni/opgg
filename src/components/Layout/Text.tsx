@@ -37,7 +37,7 @@ export const Text = styled.span<ITextProps>`
     overflow: ${({ overflow }) => overflow || 'initial'};
     color: ${({ color }) => color || 'inherit'};
     ${({ fontFamily }) => fontFamily && `font-family: ${fontFamily}`};
-    ${({ fontSize }) => fontSize && `font-size: ${fontSize}`};
+    font-size: ${({ fontSize }) => fontSize || '12px'};
     font-weight: ${({ fontWeight }) =>
         fontWeight === 'bold'
             ? '700'

@@ -23,7 +23,7 @@ export const StyledButton = styled.button<IButtonProps>`
     border-radius: ${({ borderRadius }) => borderRadius ?? '5px'};
     background: ${({ background }) => (background ? background : `${COLOR.WHITE}`)};
     box-sizing: border-box;
-    cursor: pointer;
+    cursor: ${({ cursor }) => (cursor ? cursor : 'pointer')};
     outline: none;
 
     &:focus,
@@ -47,6 +47,7 @@ export default function Button({
     padding,
     border,
     borderRadius,
+    cursor,
     className,
     onClick,
 }: IButtonProps) {
@@ -64,6 +65,7 @@ export default function Button({
             padding={padding}
             border={border}
             borderRadius={borderRadius}
+            cursor={cursor}
             focusBackground={focusBackground}
             className={className}
             onClick={(e) => {
