@@ -68,23 +68,23 @@ export default createGlobalStyle`
     }
 
     html {
-        font-family: Noto Sans KR, "sans-serif";
+        font-family: 'Helvetica', 'Nanum Gothic', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
         -webkit-font-smoothing: antialiased;
     }
     
     body {
-        font-family: 'Nanum Gothic', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
+        font-family: 'Helvetica', 'Nanum Gothic', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
         background-color: #fff;
         color: #333c45;
         font-weight: 400;
     }
 
     :lang(ko) {
-        font-family: 'Nanum Gothic', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
+        font-family: 'Helvetica', 'Nanum Gothic', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
     }
     
     :lang(en) {
-        font-family: 'Nanum Gothic', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
+        font-family: 'Helvetica', 'Nanum Gothic', AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
     }
 
     a {

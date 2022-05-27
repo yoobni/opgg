@@ -8,14 +8,16 @@ import {
 
 function Summoner() {
     return (
-        <Wrapper height={'calc(100vh - 200px)'}>
+        <>
             <ContentHeader>
 
             </ContentHeader>
-            <GridWrapper>
+            <Wrapper height={'calc(100vh - 200px)'}>
+                <GridWrapper>
 
-            </GridWrapper>
-        </Wrapper>
+                </GridWrapper>
+            </Wrapper>
+        </>
     );
 }
 
