@@ -1,13 +1,33 @@
 import {createSlice} from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
+export interface TierRankProps {
+    division: string;
+    imageUrl: string;
+    lp: number;
+    name: string;
+    shortString: string;
+    string: string;
+    tier: string;
+    tierDivision: string;
+    tierRankPoint: number;
+}
+
+export interface LeagueItemProps {
+    hasResults: boolean;
+    losses: number;
+    wins: number;
+    tierRank: TierRankProps;
+}
 
 export interface SummonerState {
     summonerName: string | undefined;
+    leagues: LeagueItemProps[];
 }
 
 const initialState: SummonerState = {
     summonerName: '',
+    leagues: [],
 };
 
 const summonerSlice = createSlice({
@@ -16,6 +36,9 @@ const summonerSlice = createSlice({
     reducers: {
         setSummonerName: (state: SummonerState, action) => {
             state.summonerName = action.payload;
+        },
+        setSummonerLeagues: (state: SummonerState, action) => {
+            state.leagues = action.payload;
         },
     },
     extraReducers: {

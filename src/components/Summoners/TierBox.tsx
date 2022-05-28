@@ -7,40 +7,34 @@ import {
 } from '../../components/Summoners';
 import {useSelector} from "react-redux";
 import {AppState} from "../../stores";
+import { LeagueItemProps } from '../../stores/summoner';
+import { TierItem } from './';
 
-const TIERBOX_WIDTH = 300;
 
 function TierBox() {
-    const summonerName = useSelector((state: AppState) => state.summoner.summonerName || '');
-    const [summonerData, setSummonerData] = useState<any>(null);
+    const leagues = useSelector((state: AppState) => state.summoner.leagues || []);
 
     useEffect(() => {
         if (typeof window !== 'object') {
             return;
         }
-
-        // FIX: contentHeader 로 이관
-        // async function getSummonerData() {
-        //     const returnData = await getSummoner({ summonerName });
-        //     setSummonerData(returnData);
-        // }
-        //
-        // getSummonerData();
     }, []);
 
-    if (!summonerData) {
+    if (leagues.length === 0) {
         // TODO: add skeleton component
         return <></>;
     }
 
-    console.log(summonerData);
-
     return (
-        <>
-            <Col width={`${TIERBOX_WIDTH}px`}>
-                asd
-            </Col>
-        </>
+        <Col>
+            {leagues.map((league: LeagueItemProps, index: number) => {
+                return (
+                    <TierItem key={`tier-item-${index}`} {...league}>
+                        asd
+                    </TierItem>
+                )
+            })}
+        </Col>
     );
 }
 

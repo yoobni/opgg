@@ -1,6 +1,6 @@
 // Package
 import React, { useEffect, useState, memo } from 'react';
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
 // Api
 import { getSummoner } from "../../api/summoner";
@@ -8,6 +8,7 @@ import { getSummoner } from "../../api/summoner";
 import { AppState } from "../../stores";
 // Component
 import { Wrapper, GridWrapper, Row, Col, Text, Button } from "../../components/Layout";
+import {updateSummonerLeagues} from "../../stores/summoner/actions/summoner";
 
 const levelImage = 'https://s-lol-web.op.gg/static/images/site/summoner/bg-levelbox.png';
 
@@ -63,22 +64,23 @@ const ThumbnailCol = styled(Col)<ImageProps>`
 function ContentHeader() {
     const summonerName = useSelector((state: AppState) => state.summoner.summonerName || '');
     const [summonerData, setSummonerData] = useState<any>(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (typeof window !== 'object') {
             return;
         }
 
-
         async function getSummonerData() {
             const returnData = await getSummoner({ summonerName });
             setSummonerData(returnData);
+            dispatch(updateSummonerLeagues(returnData.summoner.leagues));
         }
 
         getSummonerData();
     }, []);
 
-    if (!summonerData) {
+    if (summonerData === null) {
         // TODO: add skeleton component
         return <></>;
     }
@@ -96,7 +98,7 @@ function ContentHeader() {
     } = summonerData.summoner;
 
     return (
-        <Wrapper borderBottom={'1px solid #d8d8d8'}>
+        <Wrapper background={'#eaeaea'} borderBottom={'1px solid #d8d8d8'}>
             <GridWrapper padding={'0 30px'}>
                 {previousTiers.length > 0 && (
                     <Row padding={'15px 0 0'}>

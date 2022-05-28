@@ -11,8 +11,8 @@ function Summoner() {
     return (
         <>
             <ContentHeader />
-            <Wrapper height={'calc(100vh - 200px)'}>
-                <GridWrapper>
+            <Wrapper height={'calc(100vh - 200px)'} background={'#eaeaea'}>
+                <GridWrapper >
                     <Row className={'main'} padding={'10px 0 0'}>
                         <TierBox />
                         <Col className={'tier-championRate'}>
