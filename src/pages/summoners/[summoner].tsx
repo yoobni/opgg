@@ -1,12 +1,36 @@
 // Package
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from "next/router";
+import { connect } from 'react-redux';
+import { withRouter } from 'next/router';
+
+import { useSelector } from 'react-redux';
+
 import Summoner from '../../containers/Summoners';
 import { Header, Footer } from "../../components/Template";
+import { AppState } from '../../stores';
 
-function SummonerPage() {
-    const summonerName = "test";
+import { updateSummonerName } from "../../stores/summoner/actions/summoner";
+
+function SummonerPage(props: any) {
+    const summonerName = useSelector((state: AppState) => state.summoner.summonerName);
+
+    useEffect(() => {
+        if (typeof window !== 'object') {
+            return;
+        }
+
+        if (summonerName != props.summonerName) {
+            props.updateSummonerName(props.summonerName);
+        }
+    }, []);
+
+    if (summonerName == '' || summonerName == undefined) {
+        // TODO: return another result
+        return <></>;
+    }
 
     return (
         <>
@@ -21,5 +45,24 @@ function SummonerPage() {
     )
 }
 
-export default SummonerPage;
+SummonerPage.getInitialProps = async (ctx: any) => {
+    return {
+        summonerName: ctx.query.summoner,
+    };
+}
 
+function mapStateToProps(state: AppState) {
+    const {
+        summoner,
+    } = state;
+
+    return {
+        summoner,
+    };
+}
+
+export default connect(mapStateToProps, {
+    updateSummonerName,
+})(withRouter(SummonerPage));
+
+// export default SummonerPage;

@@ -1,9 +1,10 @@
 // Package
 import Head from 'next/head';
-import type { AppProps } from 'next/app'
+import type {AppContext, AppProps} from 'next/app'
 import { ThemeProvider } from 'styled-components';
 // Lib
 import GlobalStyle from '../lib/styles/GlobalStyle';
+import wrapper from '../stores';
 
 const theme = {
     colors: {
@@ -33,4 +34,4 @@ function App({ Component, pageProps }: AppProps) {
     );
 }
 
-export default App;
+export default wrapper.withRedux(App);
