@@ -1,9 +1,10 @@
 // Package
-import React, {useEffect} from 'react';
+import React, { memo, useEffect } from 'react';
 // Component
 import { Wrapper, GridWrapper, Row, Col, Text } from "../../components/Layout";
 import {
     ContentHeader,
+    TierBox,
 } from '../../components/Summoners';
 
 function Summoner() {
@@ -13,10 +14,8 @@ function Summoner() {
             <Wrapper height={'calc(100vh - 200px)'}>
                 <GridWrapper>
                     <Row className={'main'} padding={'10px 0 0'}>
+                        <TierBox />
                         <Col className={'tier-championRate'}>
-                            <Row className={'tierBox'}>
-
-                            </Row>
                             <Row className={'championRate'}>
 
                             </Row>
@@ -41,4 +40,4 @@ function Summoner() {
     );
 }
 
-export default Summoner;
+export default memo(Summoner);

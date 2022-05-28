@@ -1,18 +1,16 @@
 // Package
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
-import { useRouter } from "next/router";
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
-
 import { useSelector } from 'react-redux';
-
-import Summoner from '../../containers/Summoners';
-import { Header, Footer } from "../../components/Template";
+// Store
 import { AppState } from '../../stores';
-
 import { updateSummonerName } from "../../stores/summoner/actions/summoner";
+// Container
+import Summoner from '../../containers/Summoners';
+// Component
+import { Header, Footer } from "../../components/Template";
 
 function SummonerPage(props: any) {
     const summonerName = useSelector((state: AppState) => state.summoner.summonerName);

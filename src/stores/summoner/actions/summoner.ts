@@ -1,9 +1,8 @@
 import { summonerActions } from '../summoner';
 import { AppDispatch, AppState } from '../../index';
 
-export function updateSummonerName(summoner: string | undefined) {
-    console.log(summoner);
+export function updateSummonerName(summonerName: string) {
     return (dispatch: AppDispatch, _getState: () => AppState) => {
-        dispatch(summonerActions.setSummonerName(summoner));
+        dispatch(summonerActions.setSummonerName(summonerName));
     }
 }

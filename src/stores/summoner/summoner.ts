@@ -22,7 +22,7 @@ const summonerSlice = createSlice({
         [HYDRATE]: (state: SummonerState, action) => {
             return {
                 ...state,
-                ...action.payload.furniture,
+                ...action.payload.summoner,
             };
         },
     },

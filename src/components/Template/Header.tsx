@@ -1,3 +1,7 @@
+import { useState, memo } from 'react';
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+
 import styled from 'styled-components';
 import { COLOR } from '../../lib/styles/colors';
 import {
@@ -9,6 +13,8 @@ import {
     Input,
     Text,
 } from "../Layout";
+import { updateSummonerName } from '../../stores/summoner/actions/summoner';
+import {summonerActions} from "../../stores/summoner/summoner";
 
 const SearchRow = styled(Row)`
     justify-content: flex-end;
@@ -34,8 +40,18 @@ const SearchRow = styled(Row)`
     }
 `;
 
-export default function Header() {
-    // const [searchKeyword, setSearchKeyword] = useState<string>('');
+function Header() {
+    const [searchKeyword, setSearchKeyword] = useState<string>('');
+    const router = useRouter();
+    const dispatch = useDispatch();
+
+    const onSearchKeyword = () => {
+        if (searchKeyword !== router.query.summoner && searchKeyword.length !== 0) {
+            setSearchKeyword('');
+            dispatch(updateSummonerName(searchKeyword));
+            router.push(`/summoners/${searchKeyword}`);
+        }
+    }
 
     return (
         <Wrapper
@@ -46,15 +62,33 @@ export default function Header() {
                 <SearchRow justify={'flex-end'}>
                     <Col width={'200px'}>
                         <Input
-                            name={'search'}
+                            name={'searchKeyword'}
                             type={'text'}
-                            value={''}
                             placeholder={'소환사명, 챔피언...'}
+                            value={searchKeyword}
+                            onChange={(e) => setSearchKeyword(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    onSearchKeyword();
+                                }
+                            }}
+                            // onKeyUp={(e) => {
+                            //     let searchQuery = (e.target as HTMLInputElement).value.toLowerCase();
+                            //     setTimeout(() => {
+                            //         if (searchQuery === (e.target as HTMLInputElement).value.toLowerCase()) {
+                            //             console.log("why 3 times");
+                            //             setSearchKeyword(searchQuery);
+                            //         }
+                            //     }, 200);
+                            // }}
                         />
                     </Col>
                     <Col>
                         <Button
                             className={'opgg-search-button'}
+                            onClick={() => {
+                                onSearchKeyword();
+                            }}
                         >
                             {/* 이미지로 교체 */}
                             <Text
@@ -69,3 +103,5 @@ export default function Header() {
         </Wrapper>
     )
 }
+
+export default memo(Header);
