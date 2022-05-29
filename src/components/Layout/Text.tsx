@@ -20,6 +20,7 @@ interface ITextProps {
     textAlign?: string;
     textOverflow?: string;
     whiteSpace?: string;
+    zIndex?: string | number;
     letterSpacing?: string;
     displayOneLine?: boolean;
 }
@@ -53,6 +54,7 @@ export const Text = styled.span<ITextProps>`
     white-space: ${({ whiteSpace }) => whiteSpace || 'initial'};
     letter-spacing: ${({ letterSpacing }) => letterSpacing || 'initial'};
     ${({ textOverflow }) => textOverflow && `text-overflow: ${textOverflow};`}
+    ${({ zIndex }) => zIndex && `z-index: ${zIndex}`};
     ${({ displayOneLine }) => displayOneLine &&
         css`
             overflow: hidden;

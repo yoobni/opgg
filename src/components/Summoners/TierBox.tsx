@@ -1,24 +1,17 @@
 // Package
-import React, { useState, useEffect, memo } from 'react';
-// Component
-import { Wrapper, GridWrapper, Row, Col, Text } from "../../components/Layout";
-import {
-    ContentHeader,
-} from '../../components/Summoners';
+import React, { memo } from 'react';
 import {useSelector} from "react-redux";
-import {AppState} from "../../stores";
-import { LeagueItemProps } from '../../stores/summoner';
+// Store
+import { AppState } from "../../stores";
+import { LeagueItemProps } from "../../stores/summoner/summoner";
+// Lib
+import { SIDE_CONTENT_WIDTH } from '../../lib/values';
+// Component
+import { Col } from "../../components/Layout";
 import { TierItem } from './';
-
 
 function TierBox() {
     const leagues = useSelector((state: AppState) => state.summoner.leagues || []);
-
-    useEffect(() => {
-        if (typeof window !== 'object') {
-            return;
-        }
-    }, []);
 
     if (leagues.length === 0) {
         // TODO: add skeleton component
@@ -26,12 +19,10 @@ function TierBox() {
     }
 
     return (
-        <Col>
+        <Col width={`${SIDE_CONTENT_WIDTH}px`}>
             {leagues.map((league: LeagueItemProps, index: number) => {
                 return (
-                    <TierItem key={`tier-item-${index}`} {...league}>
-                        asd
-                    </TierItem>
+                    <TierItem key={`tier-item-${index}`} {...league} />
                 )
             })}
         </Col>

@@ -5,21 +5,21 @@ import { Wrapper, GridWrapper, Row, Col, Text } from "../../components/Layout";
 import {
     ContentHeader,
     TierBox,
+    MostInfo,
 } from '../../components/Summoners';
 
 function Summoner() {
     return (
         <>
             <ContentHeader />
-            <Wrapper height={'calc(100vh - 200px)'} background={'#eaeaea'}>
+            <Wrapper background={'#eaeaea'}>
                 <GridWrapper >
                     <Row className={'main'} padding={'10px 0 0'}>
-                        <TierBox />
-                        <Col className={'tier-championRate'}>
-                            <Row className={'championRate'}>
-
-                            </Row>
+                        <Col>
+                            <TierBox />
+                            <MostInfo />
                         </Col>
+
                         <Col className={'rankGame-gameList'}>
                             <Row className={'rankGameMenu'}>
                                 <Row className={'rank-menubar'}>

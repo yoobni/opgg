@@ -6,6 +6,7 @@ interface FlexBoxProps {
     width?: number | string;
     height?: number | string;
     maxWidth?: number | string;
+    minWidth?: number | string;
     minHeight?: number | string;
     margin?: number | string;
     padding?: number | string;
@@ -29,6 +30,7 @@ export const FlexBox = styled.div<FlexBoxProps>`
     ${({ width }) => width && `width: ${width};`}
     ${({ height }) => height && `height: ${height};`}
     ${({ maxWidth }) => maxWidth && `max-width: ${maxWidth};`}
+    ${({ minWidth }) => minWidth && `min-width: ${minWidth};`}
     ${({ minHeight }) => minHeight && `min-height: ${minHeight};`}
     ${({ margin }) => margin && `margin: ${margin};`}
     ${({ padding }) => padding && `padding: ${padding};`}

@@ -1,0 +1,1 @@
+export const SIDE_CONTENT_WIDTH = 300;

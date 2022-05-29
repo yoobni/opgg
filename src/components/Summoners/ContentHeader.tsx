@@ -10,7 +10,7 @@ import { AppState } from "../../stores";
 import { Wrapper, GridWrapper, Row, Col, Text, Button } from "../../components/Layout";
 import {updateSummonerLeagues} from "../../stores/summoner/actions/summoner";
 
-const levelImage = 'https://s-lol-web.op.gg/static/images/site/summoner/bg-levelbox.png';
+const LEVEL_IMAGE_URL = 'https://s-lol-web.op.gg/static/images/site/summoner/bg-levelbox.png';
 
 interface ImageProps {
     profileImageUrl?: string;
@@ -51,7 +51,7 @@ const ThumbnailCol = styled(Col)<ImageProps>`
         padding: 2px 0 0;
         margin-top: 95px;
         margin-left: 38px;
-        background-image: url('${levelImage}');
+        background-image: url('${LEVEL_IMAGE_URL}');
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;

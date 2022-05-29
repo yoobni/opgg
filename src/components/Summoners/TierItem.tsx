@@ -4,8 +4,6 @@ import React, { useEffect, memo } from 'react';
 import { Row, Col, Text } from "../../components/Layout";
 import { LeagueItemProps } from "../../stores/summoner/summoner";
 
-const TIER_WIDTH = 300;
-
 function TierItem(props: LeagueItemProps) {
     useEffect(() => {
         if (typeof window !== 'object') {
@@ -32,7 +30,6 @@ function TierItem(props: LeagueItemProps) {
     return (
         <>
             <Row
-                width={`${TIER_WIDTH}px`}
                 padding={hasResults ? '10px 8px' : '17px 28px'}
                 margin={'0 0 10px'}
                 border={`1px solid #cdd2d2`}
