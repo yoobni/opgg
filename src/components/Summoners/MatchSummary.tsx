@@ -7,10 +7,13 @@ import { getMatches } from "../../api/summoner";
 // Store
 import { AppState } from "../../stores";
 // Lib
-import {MAIN_CONTENT_WIDTH, LINE_POSITION, POSITIONS} from "../../lib/values";
+import  {MAIN_CONTENT_WIDTH, LINE_POSITION, POSITIONS } from "../../lib/values";
 import { KDACalculator } from "../../lib/utils";
 // Component
 import { Row, Col, Text } from "../../components/Layout";
+
+import { PieChart, Pie, ResponsiveContainer } from 'recharts';
+
 
 const MenuCol = styled(Col)<{ isSelected: boolean }>`
     padding: 12px 12px 0;
@@ -66,6 +69,17 @@ const ThumbnailCol = styled(Col)<{ backgroundImage: string }>`
     background-size: cover;
 `;
 
+const ChartText = styled(Text)`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    color: #555555;
+    font-size: 14px;
+`;
+
 function MatchSummary() {
     const summonerName = useSelector((state: AppState) => state.summoner.summonerName || '');
     const [summonerMatches, setSummonerMatches] = useState<any>(null);
@@ -111,6 +125,11 @@ function MatchSummary() {
         averageAssistRate,
     } = KDACalculator(kills, deaths, assists, (wins + losses));
 
+    const data = [
+        { name: 'win', value: wins, fill: '#1f8ecd' },
+        { name: 'lose', value: losses, fill: '#ee5a52' },
+    ];
+
     return (
         <>
             <MatchMenuRow>
@@ -145,8 +164,8 @@ function MatchSummary() {
                 background={'#ededed'}
             >
                 <InfoRow>
-                    <Col width={'90px'}>
-                        <Row margin={'0 0 14px'}>
+                    <Col width={'90px'} align={'center'}>
+                        <Row margin={'14px 0 14px'}>
                             <Text
                                 color={'#666666'}
                                 lineHeight={'15px'}
@@ -154,10 +173,24 @@ function MatchSummary() {
                                 {wins + losses}전 {wins}승 {losses}패
                             </Text>
                         </Row>
-                        <Row>
-                            <Text>
-                                chart
-                            </Text>
+                        <Row height={'90px'}>
+                            <ChartText>
+                                <b>{((wins / totalGameCount) * 100).toFixed()}</b>%
+                            </ChartText>
+                            <ResponsiveContainer width={90} height={90}>
+                                <PieChart
+                                    width={90}
+                                    height={90}
+                                    style={{ transform: 'rotate(-90deg)' }}
+                                >
+                                    <Pie
+                                        data={data}
+                                        innerRadius={90 / 2 - 13}
+                                        outerRadius={90 / 2}
+                                        dataKey={"value"}
+                                    />
+                                </PieChart>
+                            </ResponsiveContainer>
                         </Row>
                     </Col>
                     <Col
@@ -189,7 +222,7 @@ function MatchSummary() {
                                 fontSize={'16px'}
                                 lineHeight={'19px'}
                             >
-                                ({(wins / (wins + losses) * 100).toFixed()}%)
+                                ({((wins / totalGameCount) * 100).toFixed()}%)
                             </Text>
                         </Row>
                     </Col>

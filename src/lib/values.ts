@@ -17,7 +17,7 @@ export enum POSITIONS {
 export const LINE_POSITION = {
     ["TOP"]: {
         icon: TOP,
-        name: '원딜',
+        name: '탑',
     },
     ["JNG"]: {
         icon: JNG,
@@ -25,14 +25,14 @@ export const LINE_POSITION = {
     },
     ["MID"]: {
         icon: MID,
-        name: '정글',
+        name: '미드',
     },
     ["ADC"]: {
         icon: ADC,
-        name: '정글',
+        name: '원딜',
     },
     ["SUP"]: {
         icon: SUP,
-        name: '정글',
+        name: '서폿',
     },
 }
