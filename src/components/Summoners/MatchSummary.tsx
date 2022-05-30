@@ -1,6 +1,7 @@
 // Package
 import React, { useEffect, useState, memo } from 'react';
 import { useSelector } from "react-redux";
+import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 import styled from "styled-components";
 // Api
 import { getMatches } from "../../api/summoner";
@@ -11,9 +12,7 @@ import  {MAIN_CONTENT_WIDTH, LINE_POSITION, POSITIONS } from "../../lib/values";
 import { KDACalculator } from "../../lib/utils";
 // Component
 import { Row, Col, Text } from "../../components/Layout";
-
-import { PieChart, Pie, ResponsiveContainer } from 'recharts';
-
+import COLOR from "../../lib/styles/colors";
 
 const MenuCol = styled(Col)<{ isSelected: boolean }>`
     padding: 12px 12px 0;
@@ -25,11 +24,12 @@ const MenuCol = styled(Col)<{ isSelected: boolean }>`
         width: 100%;
         height: 2px;
         margin: 10px 0 0;
-        background: #1f8ecd;
+        background: ${COLOR.BLUISH};
     }
     
     ${Text} {
-        color: #555555;
+        color: ${({ isSelected }) => isSelected ? COLOR.BLUISH : COLOR.GREYNISH_BROWN};
+        font-weight: ${({ isSelected }) => isSelected ? 'bold' : 'normal'};
         line-height: 14px;
     }
 `;
@@ -37,9 +37,9 @@ const MenuCol = styled(Col)<{ isSelected: boolean }>`
 const MatchMenuRow = styled(Row)`
     width: ${MAIN_CONTENT_WIDTH}px;
     padding: 0 4px;
-    border: 1px solid #cdd2d2;
+    border: 1px solid ${COLOR.SILVER3};
     border-bottom: none;
-    background: #f2f2f2;
+    background: ${COLOR.WHITE4};
 `;
 
 const InfoRow = styled(Row)`
@@ -50,8 +50,8 @@ const InfoRow = styled(Row)`
 const ChampionCol = styled(Col)`
     justify-content: center;
     width: 228px;
-    border-left: 1px solid #cdd2d2;
-    border-right: 1px solid #cdd2d2;
+    border-left: 1px solid ${COLOR.SILVER3};
+    border-right: 1px solid ${COLOR.SILVER3};
 `;
 
 const RankCol = styled(Col)`
@@ -76,9 +76,11 @@ const ChartText = styled(Text)`
     justify-content: center;
     width: 90px;
     height: 90px;
-    color: #555555;
+    color: ${COLOR.GREYNISH_BROWN};
     font-size: 14px;
 `;
+
+const CHART_SIZE = 90;
 
 function MatchSummary() {
     const summonerName = useSelector((state: AppState) => state.summoner.summonerName || '');
@@ -96,14 +98,12 @@ function MatchSummary() {
         }
 
         getSummonerMatches();
-    }, []);
+    }, [summonerName]);
 
     if (summonerMatches === null) {
         // TODO: add skeleton component
         return <></>;
     }
-
-    console.log(summonerMatches);
 
     const {
         summary: {
@@ -126,8 +126,8 @@ function MatchSummary() {
     } = KDACalculator(kills, deaths, assists, (wins + losses));
 
     const data = [
-        { name: 'win', value: wins, fill: '#1f8ecd' },
-        { name: 'lose', value: losses, fill: '#ee5a52' },
+        { name: 'win', value: wins, fill: COLOR.BLUISH },
+        { name: 'lose', value: losses, fill: COLOR.CORAL },
     ];
 
     return (
@@ -160,14 +160,14 @@ function MatchSummary() {
             </MatchMenuRow>
             <Row
                 height={'158px'}
-                border={'1px solid #cdd2d2'}
-                background={'#ededed'}
+                border={`1px solid ${COLOR.SILVER3}`}
+                background={COLOR.WHITE5}
             >
                 <InfoRow>
                     <Col width={'90px'} align={'center'}>
                         <Row margin={'14px 0 14px'}>
                             <Text
-                                color={'#666666'}
+                                color={COLOR.GREYNISH_BROWN2}
                                 lineHeight={'15px'}
                             >
                                 {wins + losses}전 {wins}승 {losses}패
@@ -177,16 +177,16 @@ function MatchSummary() {
                             <ChartText>
                                 <b>{((wins / totalGameCount) * 100).toFixed()}</b>%
                             </ChartText>
-                            <ResponsiveContainer width={90} height={90}>
+                            <ResponsiveContainer width={CHART_SIZE} height={CHART_SIZE}>
                                 <PieChart
-                                    width={90}
-                                    height={90}
+                                    width={CHART_SIZE}
+                                    height={CHART_SIZE}
                                     style={{ transform: 'rotate(-90deg)' }}
                                 >
                                     <Pie
                                         data={data}
-                                        innerRadius={90 / 2 - 13}
-                                        outerRadius={90 / 2}
+                                        innerRadius={CHART_SIZE / 2 - 13}
+                                        outerRadius={CHART_SIZE / 2}
                                         dataKey={"value"}
                                     />
                                 </PieChart>
@@ -200,25 +200,25 @@ function MatchSummary() {
                     >
                         <Row margin={'0 0 6px'}>
                             <Text
-                                color={'#333333'}
+                                color={COLOR.BLACK}
                                 fontSize={'11px'}
                                 fontWeight={'bold'}
                                 lineHeight={'13px'}
                             >
-                                {averageKillRate} / {averageDeathRate} / {averageAssistRate}
+                                {averageKillRate} / <Text color={COLOR.REDDISH}>{averageDeathRate}</Text> / {averageAssistRate}
                             </Text>
                         </Row>
                         <Row>
                             <Text
                                 margin={'0 4px 0 0'}
-                                color={'#2daf7f'}
+                                color={COLOR.BLUEY_GREEN}
                                 fontSize={'16px'}
                                 lineHeight={'19px'}
                             >
                                 <b>{kda}</b>:1
                             </Text>
                             <Text
-                                color={'#c6443e'}
+                                color={COLOR.REDDISH}
                                 fontSize={'16px'}
                                 lineHeight={'19px'}
                             >
@@ -252,7 +252,7 @@ function MatchSummary() {
                                 <Col>
                                     <Row margin={'0 0 3px'}>
                                         <Text
-                                            color={'#333333'}
+                                            color={COLOR.BLACK}
                                             fontSize={'14px'}
                                             lineHeight={'16px'}
                                         >
@@ -262,14 +262,14 @@ function MatchSummary() {
                                     <Row>
                                         <Text
                                             margin={'0 4px 0 0'}
-                                            color={'#c6443e'}
+                                            color={COLOR.REDDISH}
                                             fontSize={'11px'}
                                             lineHeight={'13px'}
                                         >
                                             <b>{winRate}</b>%
                                         </Text>
                                         <Text
-                                            color={'#555555'}
+                                            color={COLOR.GREYNISH_BROWN}
                                             fontSize={'11px'}
                                             lineHeight={'13px'}
                                         >
@@ -277,14 +277,14 @@ function MatchSummary() {
                                         </Text>
                                         <Text
                                             margin={'0 6px'}
-                                            color={'#cdd2d2'}
+                                            color={COLOR.SILVER3}
                                             fontSize={'13px'}
                                             lineHeight={'13px'}
                                         >
                                             |
                                         </Text>
                                         <Text
-                                            color={'#555555'}
+                                            color={COLOR.GREYNISH_BROWN}
                                             fontSize={'11px'}
                                             fontWeight={'bold'}
                                             lineHeight={'13px'}
@@ -332,7 +332,7 @@ function MatchSummary() {
                                 <Col justify={'center'}>
                                     <Row margin={'0 0 3px'}>
                                         <Text
-                                            color={'#333333'}
+                                            color={COLOR.BLACK}
                                             fontSize={'14px'}
                                             lineHeight={'16px'}
                                         >
@@ -342,23 +342,23 @@ function MatchSummary() {
                                     <Row>
                                         <Col>
                                             <Text
-                                                color={'#1f8ecd'}
+                                                color={COLOR.BLUISH}
                                                 fontSize={'11px'}
                                                 lineHeight={'13px'}
                                             >
                                                 <b>{((games / totalGameCount) * 100).toFixed()}</b>%
                                             </Text>
                                         </Col>
-                                        <Col width={'1px'} height={'12px'} margin={'0 6px'} background={'#cdd2d2'}></Col>
+                                        <Col width={'1px'} height={'12px'} margin={'0 6px'} background={COLOR.SILVER3}></Col>
                                         <Col>
                                             <Text
-                                                color={'#666666'}
+                                                color={COLOR.GREYNISH_BROWN2}
                                                 fontSize={'11px'}
                                                 lineHeight={'13px'}
                                             >
                                                 승률&nbsp;
                                                 <Text
-                                                    color={'#333333'}
+                                                    color={COLOR.BLACK}
                                                 >
                                                     <b>{((wins / games) * 100).toFixed()}</b>%
                                                 </Text>

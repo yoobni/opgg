@@ -9,6 +9,7 @@ import { AppState } from "../../stores";
 // Lib
 import { SIDE_CONTENT_WIDTH } from "../../lib/values";
 import { KDACalculator } from "../../lib/utils";
+import { COLOR } from '../../lib/styles/colors';
 // Component
 import { Row, Col, Text } from "../../components/Layout";
 
@@ -21,7 +22,7 @@ interface ImageProps {
 const Wrapper = styled.div`
     width: ${SIDE_CONTENT_WIDTH}px;
     margin: 0 0 100px;
-    border: 1px solid #cdd2d2;
+    border: 1px solid ${COLOR.SILVER3};
     border-bottom: none;
     border-radius: 2px;
     background: #ededed;
@@ -29,7 +30,7 @@ const Wrapper = styled.div`
 
 const MostRow = styled(Row)<{ padding?: string }>`
     padding: ${({ padding }) => padding || '4px 15px'};
-    border-bottom: 1px solid #cdd2d2;
+    border-bottom: 1px solid ${COLOR.SILVER3};
 `;
 
 const ThumbnailCol = styled(Col)<ImageProps>`
@@ -44,7 +45,7 @@ const ThumbnailCol = styled(Col)<ImageProps>`
 `;
 
 const MainText = styled(Text)`
-    color: #5e5e5e;
+    color: ${COLOR.BROWNISH_GREY};
     font-size: 13px;
     font-weight: bold;
     line-height: 16px;
@@ -63,11 +64,11 @@ const MenuCol = styled(Col)<{ isSelected: boolean }>`
     align-items: center;
     flex-grow: 1;
     padding: 15px;
-    border-bottom: 1px solid ${({ isSelected }) => isSelected ? '#ededed' : '#cdd2d2'};
+    border-bottom: 1px solid ${({ isSelected }) => isSelected ? COLOR.WHITE5 : COLOR.SILVER3};
     cursor: pointer;
     
     ${Text} {
-        color: ${({ isSelected }) => isSelected ? '#5e5e5e' : '#879292'};
+        color: ${({ isSelected }) => isSelected ? COLOR.BROWNISH_GREY : '#879292'};
         font-weight: ${({ isSelected }) => isSelected ? 'bold' : 'normal'};
         line-height: 15px;
     }
@@ -100,7 +101,7 @@ function MostInfo() {
         }
 
         getMostInfoData();
-    }, []);
+    }, [summonerName]);
 
     if (summonerMostInfo === null) {
         // TODO: add skeleton component
@@ -123,7 +124,7 @@ function MostInfo() {
                         챔피언 승률
                     </Text>
                 </MenuCol>
-                <Col width={'1px'} background={'#cdd2d2'}></Col>
+                <Col width={'1px'} background={COLOR.SILVER3}></Col>
                 <MenuCol
                     isSelected={mostViewMode === 'recent'}
                     onClick={() => setMostViewMode('recent')}
@@ -240,13 +241,13 @@ function MostInfo() {
                                             justify={'center'}
                                             width={`${winRate}%`}
                                             height={'24px'}
-                                            background={'#1f8ecd'}
+                                            background={COLOR.BLUISH}
                                         >
                                             <Text
+                                                margin={'0 0 0 4px'}
                                                 color={'#ffffff'}
                                                 fontWeight={'bold'}
                                                 lineHeight={'15px'}
-                                                margin={'0 0 0 4px'}
                                                 zIndex={10}
                                             >
                                                 {wins}승
@@ -259,7 +260,7 @@ function MostInfo() {
                                             justify={'center'}
                                             width={`${(100 - winRate)}%`}
                                             height={'24px'}
-                                            background={'#ee5a52'}
+                                            background={COLOR.CORAL}
                                         >
                                             <Text
                                                 color={'#ffffff'}

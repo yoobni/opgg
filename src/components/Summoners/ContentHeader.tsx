@@ -1,14 +1,15 @@
 // Package
 import React, { useEffect, useState, memo } from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 // Api
 import { getSummoner } from "../../api/summoner";
 // Store
 import { AppState } from "../../stores";
+import { summonerActions } from "../../stores/summoner/summoner";
 // Component
 import { Wrapper, GridWrapper, Row, Col, Text, Button } from "../../components/Layout";
-import {updateSummonerLeagues} from "../../stores/summoner/actions/summoner";
+import COLOR from "../../lib/styles/colors";
 
 const LEVEL_IMAGE_URL = 'https://s-lol-web.op.gg/static/images/site/summoner/bg-levelbox.png';
 
@@ -55,7 +56,7 @@ const ThumbnailCol = styled(Col)<ImageProps>`
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
-        color: #eabd56;
+        color: ${COLOR.DULL_YELLOW};
         font-size: 14px;
         text-align: center;
     }
@@ -72,13 +73,24 @@ function ContentHeader() {
         }
 
         async function getSummonerData() {
-            const returnData = await getSummoner({ summonerName });
-            setSummonerData(returnData);
-            dispatch(updateSummonerLeagues(returnData.summoner.leagues));
+            const summonerData = await getSummoner({ summonerName });
+            setSummonerData(summonerData);
+
+            if (summonerData != null) {
+                return summonerData;
+            }
+
+            return null;
         }
 
-        getSummonerData();
-    }, []);
+        getSummonerData()
+            .then((data) => {
+                if (data != null) {
+                    dispatch(summonerActions.setSummonerLeagues(data?.summoner?.leagues));
+                }
+            })
+        ;
+    }, [summonerName]);
 
     if (summonerData === null) {
         // TODO: add skeleton component
@@ -98,7 +110,7 @@ function ContentHeader() {
     } = summonerData.summoner;
 
     return (
-        <Wrapper background={'#eaeaea'} borderBottom={'1px solid #d8d8d8'}>
+        <Wrapper background={COLOR.WHITE} borderBottom={`1px solid ${COLOR.WHITE3}`}>
             <GridWrapper padding={'0 30px'}>
                 {previousTiers.length > 0 && (
                     <Row padding={'15px 0 0'}>
@@ -110,15 +122,15 @@ function ContentHeader() {
 
                             return (
                                 <Button
-                                    padding={'4px 5px 3px'}
-                                    border={'1px solid #d0d3d4'}
-                                    borderRadius={'2px'}
-                                    background={'#e0e3e3'}
-                                    margin={'0 7px 0 0'}
                                     key={`button-temp-${index}`}
+                                    padding={'4px 5px 3px'}
+                                    margin={'0 7px 0 0'}
+                                    border={`1px solid ${COLOR.SILVER2}`}
+                                    borderRadius={'2px'}
+                                    background={COLOR.SILVER}
                                 >
                                     <Text
-                                        color={'#657070'}
+                                        color={COLOR.SLATE_GREY}
                                         fontSize={'11px'}
                                         lineHeight={'11px'}
                                         letterSpacing={'-0.42px'}
@@ -144,7 +156,7 @@ function ContentHeader() {
                     <Col>
                         <Row padding={'10px 0 4px'}>
                             <Text
-                                color={'#242929'}
+                                color={COLOR.CHARCOAL}
                                 fontSize={'20px'}
                                 fontWeight={'bold'}
                                 letterSpacing={'-0.77px'}

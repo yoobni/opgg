@@ -1,5 +1,7 @@
 // Package
 import React, { useEffect, memo } from 'react';
+// Lib
+import COLOR from "../../lib/styles/colors";
 // Component
 import { Row, Col, Text } from "../../components/Layout";
 import { LeagueItemProps } from "../../stores/summoner/summoner";
@@ -32,9 +34,9 @@ function TierItem(props: LeagueItemProps) {
             <Row
                 padding={hasResults ? '10px 8px' : '17px 28px'}
                 margin={'0 0 10px'}
-                border={`1px solid #cdd2d2`}
+                border={`1px solid ${COLOR.SILVER3}`}
                 borderRadius={'2px'}
-                background={`#f2f2f2`}
+                background={COLOR.WHITE4}
                 align={'center'}
             >
                 <Col
@@ -60,7 +62,7 @@ function TierItem(props: LeagueItemProps) {
                         <>
                             <Row margin={'0 0 4px'}>
                                 <Text
-                                    color={'#353a3a'}
+                                    color={COLOR.DARK_GREY}
                                     fontSize={'12px'}
                                     lineHeight={'15px'}
                                 >
@@ -69,7 +71,7 @@ function TierItem(props: LeagueItemProps) {
                             </Row>
                             <Row margin={'0 0 6px'}>
                                 <Text
-                                    color={'#1f8ecd'}
+                                    color={COLOR.BLUISH}
                                     fontSize={'15px'}
                                     fontWeight={'bold'}
                                     lineHeight={'18px'}
@@ -79,7 +81,7 @@ function TierItem(props: LeagueItemProps) {
                             </Row>
                             <Row margin={'0 0 3px'}>
                                 <Text
-                                    color={'#555e5e'}
+                                    color={COLOR.GUNMETAL}
                                     fontWeight={'bold'}
                                     lineHeight={'14px'}
                                 >

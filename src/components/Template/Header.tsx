@@ -1,9 +1,10 @@
 import { useState, memo } from 'react';
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-
 import styled from 'styled-components';
+
 import { COLOR } from '../../lib/styles/colors';
+import { summonerActions } from "../../stores/summoner/summoner";
 import {
     Wrapper,
     GridWrapper,
@@ -13,8 +14,6 @@ import {
     Input,
     Text,
 } from "../Layout";
-import { updateSummonerName } from '../../stores/summoner/actions/summoner';
-import {summonerActions} from "../../stores/summoner/summoner";
 
 const SearchRow = styled(Row)`
     justify-content: flex-end;
@@ -48,7 +47,7 @@ function Header() {
     const onSearchKeyword = () => {
         if (searchKeyword !== router.query.summoner && searchKeyword.length !== 0) {
             setSearchKeyword('');
-            dispatch(updateSummonerName(searchKeyword));
+            dispatch(summonerActions.setSummonerName(searchKeyword));
             router.push(`/summoners/${searchKeyword}`);
         }
     }

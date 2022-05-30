@@ -14,7 +14,7 @@ function Summoner() {
         <>
             <ContentHeader />
             <Wrapper background={'#eaeaea'}>
-                <GridWrapper >
+                <GridWrapper>
                     <Row className={'main'} padding={'10px 0 0'}>
                         <Col margin={'0 10px 0 0'}>
                             <TierBox />
