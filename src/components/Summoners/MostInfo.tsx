@@ -112,8 +112,6 @@ function MostInfo() {
         recentWinRate,
     } = summonerMostInfo;
 
-    console.log(summonerMostInfo);
-
     return (
         <Wrapper>
             <Row>

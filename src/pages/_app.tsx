@@ -1,6 +1,6 @@
 // Package
 import Head from 'next/head';
-import type {AppContext, AppProps} from 'next/app'
+import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components';
 // Lib
 import GlobalStyle from '../lib/styles/GlobalStyle';

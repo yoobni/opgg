@@ -1,11 +1,12 @@
 // Package
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 // Component
-import { Wrapper, GridWrapper, Row, Col, Text } from "../../components/Layout";
+import { Wrapper, GridWrapper, Row, Col } from "../../components/Layout";
 import {
     ContentHeader,
     TierBox,
     MostInfo,
+    MatchSummary,
 } from '../../components/Summoners';
 
 function Summoner() {
@@ -15,23 +16,12 @@ function Summoner() {
             <Wrapper background={'#eaeaea'}>
                 <GridWrapper >
                     <Row className={'main'} padding={'10px 0 0'}>
-                        <Col>
+                        <Col margin={'0 10px 0 0'}>
                             <TierBox />
                             <MostInfo />
                         </Col>
-
-                        <Col className={'rankGame-gameList'}>
-                            <Row className={'rankGameMenu'}>
-                                <Row className={'rank-menubar'}>
-
-                                </Row>
-                                <Row className={'rank-chart'}>
-
-                                </Row>
-                            </Row>
-                            <Row className={'rankGameList'}>
-
-                            </Row>
+                        <Col>
+                            <MatchSummary />
                         </Col>
                     </Row>
                 </GridWrapper>
