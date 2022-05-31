@@ -8,11 +8,14 @@ import { getMatches } from "../../api/summoner";
 // Store
 import { AppState } from "../../stores";
 // Lib
-import  {MAIN_CONTENT_WIDTH, LINE_POSITION, POSITIONS } from "../../lib/values";
+import { MAIN_CONTENT_WIDTH, LINE_POSITION, POSITIONS } from "../../lib/values";
 import { KDACalculator } from "../../lib/utils";
-// Component
-import { Row, Col, Text } from "../../components/Layout";
 import COLOR from "../../lib/styles/colors";
+// Component
+import {
+    MatchList
+} from './';
+import { Row, Col, Text } from "../../components/Layout";
 
 const MenuCol = styled(Col)<{ isSelected: boolean }>`
     padding: 12px 12px 0;
@@ -115,6 +118,7 @@ function MatchSummary() {
         },
         champions,
         positions,
+        games,
     } = summonerMatches;
 
     const totalGameCount = (wins + losses);
@@ -160,6 +164,7 @@ function MatchSummary() {
             </MatchMenuRow>
             <Row
                 height={'158px'}
+                margin={'0 0 16px'}
                 border={`1px solid ${COLOR.SILVER3}`}
                 background={COLOR.WHITE5}
             >
@@ -371,6 +376,7 @@ function MatchSummary() {
                     })}
                 </RankCol>
             </Row>
+            <MatchList games={games} />
         </>
     );
 }

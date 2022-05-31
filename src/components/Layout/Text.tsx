@@ -57,9 +57,15 @@ export const Text = styled.span<ITextProps>`
     ${({ zIndex }) => zIndex && `z-index: ${zIndex}`};
     ${({ displayOneLine }) => displayOneLine &&
         css`
+            word-wrap: normal;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            white-space: normal;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
+            text-aline: left;
+            word-break: break-all;
         `
     }
 `;

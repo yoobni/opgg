@@ -17,6 +17,7 @@ interface FlexBoxProps {
     wrap?: string;
     justify?: string;
     align?: string;
+    alignSelf?: string;
     grow?: number | string;
     textAlign?: string;
     cursor?: string;
@@ -41,6 +42,7 @@ export const FlexBox = styled.div<FlexBoxProps>`
     ${({ wrap }) => wrap && `flex-wrap: ${wrap};`}
     ${({ justify }) => justify && `justify-content: ${justify};`}
     ${({ align }) => align && `align-items: ${align};`}
+    ${({ alignSelf }) => alignSelf && `align-self: ${alignSelf};`}
     ${({ grow }) => grow && `flex-grow: ${grow};`}
     ${({ cursor }) => cursor && `cursor: ${cursor};`}
     ${({ textAlign }) => textAlign && `text-align: ${textAlign};`}
