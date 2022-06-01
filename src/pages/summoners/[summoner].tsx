@@ -1,9 +1,11 @@
 // Package
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+// Api
+import { getItemInfo } from '../../api/summoner';
 // Store
 import { AppState } from '../../stores';
 import { updateSummonerName } from "../../stores/summoner/actions/summoner";
@@ -15,9 +17,18 @@ import { Header, Footer } from "../../components/Template";
 function SummonerPage(props: any) {
     const summonerName = useSelector((state: AppState) => state.summoner.summonerName);
 
+    const saveItemInfo = useCallback(async () => {
+        const items = await getItemInfo();
+        localStorage.setItem('itemInfo', JSON.stringify(items.data));
+    }, []);
+
     useEffect(() => {
         if (typeof window !== 'object') {
             return;
+        }
+
+        if (!localStorage.getItem('itemInfo')) {
+            saveItemInfo();
         }
 
         if (summonerName != props.summonerName) {

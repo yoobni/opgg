@@ -1,12 +1,13 @@
 // Package
 import React, { useEffect, memo } from 'react';
 import Image from "next/image";
+import ReactTooltip from 'react-tooltip';
 import styled from "styled-components";
 // Api
 import { Game } from "../../api/summoner";
 // Lib
 import COLOR from "../../lib/styles/colors";
-import { ago, getChampionNameWithUrl } from "../../lib/utils";
+import { ago, getFileName, getItemDescription } from "../../lib/utils";
 import RED_WARD from '../../assets/icons/red-ward-icon.svg';
 import BLUE_WARD from '../../assets/icons/blue-ward-icon.svg';
 // Component
@@ -64,6 +65,9 @@ const MatchItemRow = styled(Row)<{ isWin: boolean }>`
         border-radius: 2px;
         background: ${({ isWin }) => isWin ? COLOR.GREY_BLUE : COLOR.PINKISH_GREY4};
     }
+`;
+
+const ItemRow = styled(Row)`
 `;
 
 function MatchList(props: MatchListProps) {
@@ -207,7 +211,7 @@ function MatchList(props: MatchListProps) {
                             </Row>
                             <Row align={'center'}>
                                 <Text className={'normal-text'}>
-                                    {getChampionNameWithUrl(imageUrl)}
+                                    {getFileName(imageUrl)}
                                 </Text>
                             </Row>
                         </Col>
@@ -301,6 +305,7 @@ function MatchList(props: MatchListProps) {
                                 <Row width={'72px'} wrap={'wrap'} align={'center'} justify={'center'} alignSelf={'center'} >
                                     {itemTempList.map((itemIndex) => {
                                         let itemImage = items[itemIndex] ? items[itemIndex].imageUrl : '';
+                                        let itemInfo = getItemDescription(itemImage);
 
                                         if (itemIndex === items.length - 1) {
                                             wardImage = itemImage;
@@ -308,21 +313,25 @@ function MatchList(props: MatchListProps) {
                                         }
 
                                         return (
-                                            <Row
+                                            <ItemRow
                                                 key={`game-champion-item-${itemIndex}`}
                                                 className={'item-row'}
                                             >
                                                 {itemImage.length > 0 && (
-                                                    <Image
-                                                        unoptimized
-                                                        src={itemImage}
-                                                        alt={'champion-item-icon'}
-                                                        className={'square-image'}
-                                                        width={'22px'}
-                                                        height={'22px'}
-                                                    />
+                                                    <>
+                                                        <Image
+                                                            unoptimized
+                                                            src={itemImage}
+                                                            alt={'champion-item-icon'}
+                                                            className={'square-image'}
+                                                            width={'22px'}
+                                                            height={'22px'}
+                                                            data-tip={`${itemInfo.name}${<br />}${itemInfo.description}`}
+                                                        />
+                                                        <ReactTooltip place="top" type="dark" effect="solid" />
+                                                    </>
                                                 )}
-                                            </Row>
+                                            </ItemRow>
                                         )
                                     })}
                                 </Row>

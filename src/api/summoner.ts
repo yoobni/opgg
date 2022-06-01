@@ -69,6 +69,12 @@ export async function getMostInfo(
     }
 }
 
+export function getItemInfo() {
+    return axios.get(
+        `http://ddragon.leagueoflegends.com/cdn/10.15.1/data/ko_KR/item.json`,
+    );
+}
+
 export interface GetSummonerNameParameter {
     summonerName: string;
 }

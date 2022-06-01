@@ -64,13 +64,22 @@ export function ago(time: number) {
     return moment(realTiem).fromNow();
 }
 
-export function getChampionNameWithUrl(url: string) {
+export function getFileName(url: string) {
     const regUrl = new RegExp(/\/\w+(?=.png)/);
     const matchResult = url.match(regUrl);
 
     if (matchResult === null) return '';
 
     return matchResult[0].replace(/\//, '');
+}
+
+export function getItemDescription(url: string) {
+    const itemCode = getFileName(url);
+    const tempItemInfo = JSON.parse(localStorage.getItem('itemInfo') || '{}');
+    return tempItemInfo?.data[itemCode] || {
+        name: '',
+        description: '',
+    }
 }
 
 export function removeSpecialCharacter(keyword: string) {
