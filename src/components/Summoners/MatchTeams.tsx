@@ -86,7 +86,7 @@ function MatchTeams(props: MatchListProps) {
                                     <Col
                                         width={'56px'}
                                         margin={'0 13px 0 0'}
-                                        onClick={(e: MouseEvent) => onClickSummonerName(e, summoner.summonerName)}
+                                        onClick={(e) => onClickSummonerName(e, summoner.summonerName)}
                                         cursor={'pointer'}
                                     >
                                         <Text

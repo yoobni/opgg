@@ -11,6 +11,7 @@ export const COLOR = {
     SLATE_GREY: '#657070',
     BROWNISH_GREY: '#5e5e5e',
     DARK_GREY: '#353a3a',
+    WARM_GREY2: '#999999',
     WARM_GREY3: '#94818d',
     // Black
     BLACK: '#333333',
@@ -49,6 +50,7 @@ export const COLOR = {
     GUNMETAL: '#555e5e',
     AMETHYST: '#8c51c5',
     WARM_PURPLE: '#7f3590',
+    YELLOW_OCHRE: '#e19205',
     // SEMANTIC
     DIM1: 'rgba(0, 0, 0, 0.6)',
     DIM2: 'rgba(0, 0, 0, 0.2)',

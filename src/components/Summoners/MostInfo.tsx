@@ -8,7 +8,7 @@ import { getMostInfo } from "../../api/summoner";
 import { AppState } from "../../stores";
 // Lib
 import { SIDE_CONTENT_WIDTH } from "../../lib/values";
-import { KDACalculator } from "../../lib/utils";
+import { KDACalculator, getWinRateWithColor } from "../../lib/utils";
 import { COLOR } from '../../lib/styles/colors';
 // Component
 import { Row, Col, Text } from "../../components/Layout";
@@ -44,8 +44,8 @@ const ThumbnailCol = styled(Col)<ImageProps>`
     background-size: cover;
 `;
 
-const MainText = styled(Text)`
-    color: ${COLOR.BROWNISH_GREY};
+const MainText = styled(Text)<{ color?: string }>`
+    color: ${({ color }) => color ? color : COLOR.BROWNISH_GREY};
     font-size: 13px;
     font-weight: bold;
     line-height: 16px;
@@ -113,6 +113,16 @@ function MostInfo() {
         recentWinRate,
     } = summonerMostInfo;
 
+    const mostChampions = champions.sort((a: any, b: any) => {
+        if (a.games > b.games) {
+            return -1;
+        } else if (a.games < b.games) {
+            return 1;
+        }
+
+        return 0;
+    });
+
     return (
         <Wrapper>
             <Row>
@@ -136,7 +146,7 @@ function MostInfo() {
             </Row>
             {mostViewMode === 'all' ? (
                 <>
-                    {champions.map((data: any, index: number) => {
+                    {mostChampions.map((data: any, index: number) => {
                         const {
                             imageUrl,
                             name,
@@ -153,9 +163,13 @@ function MostInfo() {
                             averageKillRate,
                             averageDeathRate,
                             averageAssistRate,
+                            kdaTextColor,
                         } = KDACalculator(kills, deaths, assists, games);
 
-                        const winPercent = ((wins / games) * 100).toFixed();
+                        const {
+                            winRate,
+                            color,
+                        } = getWinRateWithColor(wins, games);
 
                         return (
                             <MostRow key={`summoner-most-champion-${index}`}>
@@ -174,7 +188,7 @@ function MostInfo() {
                                 </Col>
                                 <Col align={'center'} justify={'center'} grow={1}>
                                     <Row margin={'0 0 4px'}>
-                                        <MainText>
+                                        <MainText color={kdaTextColor}>
                                             {kda}:1 평점
                                         </MainText>
                                     </Row>
@@ -186,8 +200,8 @@ function MostInfo() {
                                 </Col>
                                 <Col align={'center'} justify={'center'} width={'45px'}>
                                     <Row align={'center'} justify={'center'} margin={'0 0 4px'}>
-                                        <MainText>
-                                            {winPercent}%
+                                        <MainText color={color}>
+                                            {winRate}%
                                         </MainText>
                                     </Row>
                                     <Row>
@@ -211,7 +225,11 @@ function MostInfo() {
                         } = data;
 
                         const totalGameCount = wins + losses;
-                        const winRate: any = wins > 0 ? ((wins / totalGameCount) * 100).toFixed() : 0;
+                        const {
+                            winRate,
+                            color,
+                            isChange,
+                        } = getWinRateWithColor(wins, totalGameCount);
 
                         return (
                             <MostRow key={`summoner-recent-champion-${index}`} padding={'8px 15px'}>
@@ -227,12 +245,12 @@ function MostInfo() {
                                 </Col>
                                 <Col align={'center'} justify={'center'} grow={1}>
                                    <Text
-                                       color={'#879292'}
+                                       color={isChange ? color : '#878f94'}
                                        fontSize={'13px'}
                                        fontWeight={'bold'}
                                        lineHeight={'16px'}
                                    >
-                                       {(wins / totalGameCount * 100).toFixed()}%
+                                       {winRate}%
                                    </Text>
                                 </Col>
                                 <ProgressBar>
@@ -258,7 +276,7 @@ function MostInfo() {
                                         <Col
                                             align={'flex-end'}
                                             justify={'center'}
-                                            width={`${(100 - winRate)}%`}
+                                            width={`${(100 - Number(winRate))}%`}
                                             height={'24px'}
                                             background={COLOR.CORAL}
                                         >

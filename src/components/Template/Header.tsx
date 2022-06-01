@@ -63,7 +63,7 @@ const FixedSearchKeywordList = styled.div`
     width: 260px;
     background: white;
     z-index: 1000;
-    box-shadow: 0px 2px 4px rgba(24, 29, 31, 0.4)
+    box-shadow: 0px 2px 4px rgba(24, 29, 31, 0.4);
 `;
 
 export const KeywordWrapper = (props: {

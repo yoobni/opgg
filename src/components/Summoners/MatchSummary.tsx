@@ -9,8 +9,9 @@ import { getMatches } from "../../api/summoner";
 import { AppState } from "../../stores";
 // Lib
 import { MAIN_CONTENT_WIDTH, LINE_POSITION, POSITIONS } from "../../lib/values";
-import { KDACalculator } from "../../lib/utils";
+import {getWinRateWithColor, KDACalculator} from "../../lib/utils";
 import COLOR from "../../lib/styles/colors";
+import NONE_IMAGE from '../../assets/images/no-champion-image.svg';
 // Component
 import {
     MatchList
@@ -122,17 +123,24 @@ function MatchSummary() {
     } = summonerMatches;
 
     const totalGameCount = (wins + losses);
+    const championList = [0, 1, 2];
     const {
         kda,
         averageKillRate,
         averageDeathRate,
         averageAssistRate,
+        kdaTextColor,
     } = KDACalculator(kills, deaths, assists, (wins + losses));
+    const {
+        winRate,
+        color,
+    } = getWinRateWithColor(wins, totalGameCount);
 
     const data = [
         { name: 'win', value: wins, fill: COLOR.BLUISH },
         { name: 'lose', value: losses, fill: COLOR.CORAL },
     ];
+
 
     return (
         <>
@@ -216,24 +224,41 @@ function MatchSummary() {
                         <Row>
                             <Text
                                 margin={'0 4px 0 0'}
-                                color={COLOR.BLUEY_GREEN}
+                                color={kdaTextColor}
                                 fontSize={'16px'}
                                 lineHeight={'19px'}
                             >
                                 <b>{kda}</b>:1
                             </Text>
                             <Text
-                                color={COLOR.REDDISH}
+                                color={color}
                                 fontSize={'16px'}
                                 lineHeight={'19px'}
                             >
-                                ({((wins / totalGameCount) * 100).toFixed()}%)
+                                ({winRate}%)
                             </Text>
                         </Row>
                     </Col>
                 </InfoRow>
                 <ChampionCol padding={'0 0 0 16px'}>
-                    {champions.map((champion: any, index: number) => {
+                    {championList.map((championIndex: any, index: number) => {
+                        if (champions[championIndex] == undefined || champions[championIndex] == null) {
+                            return (
+                                <Row key={`champion-row-${index}`} margin={'6px 0'} align={'center'}>
+                                    <ThumbnailCol backgroundImage={NONE_IMAGE} />
+                                    <Col>
+                                        <Text
+                                            color={COLOR.WARM_GREY2}
+                                            fontSize={'11px'}
+                                            lineHeight={'12px'}
+                                        >
+                                            챔피언 정보가 없습니다.
+                                        </Text>
+                                    </Col>
+                                </Row>
+                            )
+                        }
+
                         const {
                             name,
                             imageUrl,
@@ -243,13 +268,16 @@ function MatchSummary() {
                             assists,
                             wins,
                             losses,
-                        } = champion;
+                        } = champions[championIndex];
 
                         const {
                             kda,
+                            kdaTextColor,
                         } = KDACalculator(kills, deaths, assists, games);
-
-                        const winRate = ((wins / games) * 100).toFixed();
+                        const {
+                            winRate,
+                            color,
+                        } = getWinRateWithColor(wins, totalGameCount);
 
                         return (
                             <Row key={`champion-row-${index}`} margin={'6px 0'} align={'center'}>
@@ -267,7 +295,7 @@ function MatchSummary() {
                                     <Row>
                                         <Text
                                             margin={'0 4px 0 0'}
-                                            color={COLOR.REDDISH}
+                                            color={color}
                                             fontSize={'11px'}
                                             lineHeight={'13px'}
                                         >
@@ -289,7 +317,7 @@ function MatchSummary() {
                                             |
                                         </Text>
                                         <Text
-                                            color={COLOR.GREYNISH_BROWN}
+                                            color={kdaTextColor}
                                             fontSize={'11px'}
                                             fontWeight={'bold'}
                                             lineHeight={'13px'}
@@ -319,6 +347,10 @@ function MatchSummary() {
                             icon,
                             name,
                         } = LINE_POSITION[position];
+
+                        const {
+                            winRate,
+                        } = getWinRateWithColor(wins, totalGameCount);
 
                         return (
                             <Row key={`summoner-position-${index}`} margin={'20px 0 0'}>
@@ -365,7 +397,7 @@ function MatchSummary() {
                                                 <Text
                                                     color={COLOR.BLACK}
                                                 >
-                                                    <b>{((wins / games) * 100).toFixed()}</b>%
+                                                    <b>{winRate}</b>%
                                                 </Text>
                                             </Text>
                                         </Col>
