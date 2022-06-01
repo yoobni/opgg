@@ -14,6 +14,7 @@ import {
     Input,
     Text,
 } from "../Layout";
+import {removeSpecialCharacter} from "../../lib/utils";
 
 const SearchRow = styled(Row)`
     justify-content: flex-end;
@@ -46,9 +47,10 @@ function Header() {
 
     const onSearchKeyword = () => {
         if (searchKeyword !== router.query.summoner && searchKeyword.length !== 0) {
+            const filterSearchKeyword = removeSpecialCharacter(searchKeyword);
+            dispatch(summonerActions.setSummonerName(filterSearchKeyword))
             setSearchKeyword('');
-            dispatch(summonerActions.setSummonerName(searchKeyword));
-            router.push(`/summoners/${searchKeyword}`);
+            router.push(`/summoners/${filterSearchKeyword}`);
         }
     }
 
@@ -66,8 +68,9 @@ function Header() {
                             placeholder={'소환사명, 챔피언...'}
                             value={searchKeyword}
                             onChange={(e) => setSearchKeyword(e.target.value)}
-                            onKeyDown={(e) => {
+                            onKeyPress={(e) => {
                                 if (e.key === 'Enter') {
+                                    e.preventDefault();
                                     onSearchKeyword();
                                 }
                             }}

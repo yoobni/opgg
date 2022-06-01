@@ -50,3 +50,8 @@ export function getChampionNameWithUrl(url: string) {
 
     return matchResult[0].replace(/\//, '');
 }
+
+export function removeSpecialCharacter(keyword: string) {
+    const regChar = new RegExp(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi);
+    return keyword.replace(regChar, "");
+}
