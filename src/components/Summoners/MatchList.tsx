@@ -2,9 +2,13 @@
 import React, { useEffect, memo } from 'react';
 import Image from "next/image";
 import styled from "styled-components";
+// Api
+import { Game } from "../../api/summoner";
 // Lib
 import COLOR from "../../lib/styles/colors";
 import { ago, getChampionNameWithUrl } from "../../lib/utils";
+import RED_WARD from '../../assets/icons/red-ward-icon.svg';
+import BLUE_WARD from '../../assets/icons/blue-ward-icon.svg';
 // Component
 import { MatchTeams } from './';
 import { Row, Col, Text, Button } from "../../components/Layout";
@@ -82,7 +86,7 @@ function MatchList(props: MatchListProps) {
 
     return (
         <>
-            {games.map((game: any, index: number) => {
+            {games.map((game: Game, index: number) => {
                 const {
                     champion: {
                         imageUrl,
@@ -103,7 +107,7 @@ function MatchList(props: MatchListProps) {
                             death,
                             assist,
                             kdaString,
-                            largestMultiKillString,
+                            largestMultiKillString = '',
                             opScoreBadge,
                             cs,
                             csPerMin,
@@ -292,67 +296,90 @@ function MatchList(props: MatchListProps) {
                             </Row>
                         </Col>
                         {/* items */}
-                        <Row grow={1} align={'center'} justify={'center'}>
-                            <Row width={'72px'} wrap={'wrap'} align={'center'} justify={'center'} alignSelf={'center'} >
-                                {itemTempList.map((itemIndex) => {
-                                    let itemImage = items[itemIndex] ? items[itemIndex].imageUrl : '';
+                        <Col grow={1} align={'center'} justify={'center'}>
+                            <Row>
+                                <Row width={'72px'} wrap={'wrap'} align={'center'} justify={'center'} alignSelf={'center'} >
+                                    {itemTempList.map((itemIndex) => {
+                                        let itemImage = items[itemIndex] ? items[itemIndex].imageUrl : '';
 
-                                    if (itemIndex === items.length - 1) {
-                                        wardImage = itemImage;
-                                        itemImage = '';
-                                    }
+                                        if (itemIndex === items.length - 1) {
+                                            wardImage = itemImage;
+                                            itemImage = '';
+                                        }
 
-                                    return (
-                                        <Row
-                                            key={`game-champion-item-${itemIndex}`}
-                                            className={'item-row'}
+                                        return (
+                                            <Row
+                                                key={`game-champion-item-${itemIndex}`}
+                                                className={'item-row'}
+                                            >
+                                                {itemImage.length > 0 && (
+                                                    <Image
+                                                        unoptimized
+                                                        src={itemImage}
+                                                        alt={'champion-item-icon'}
+                                                        className={'square-image'}
+                                                        width={'22px'}
+                                                        height={'22px'}
+                                                    />
+                                                )}
+                                            </Row>
+                                        )
+                                    })}
+                                </Row>
+                                <Col>
+                                    {wardImage.length > 0 && (
+                                        <Col className={'item-row'}>
+                                            <Image
+                                                unoptimized
+                                                src={wardImage}
+                                                alt={'champion-ward-icon'}
+                                                className={'square-image'}
+                                                width={'22px'}
+                                                height={'22px'}
+                                            />
+                                        </Col>
+                                    )}
+                                    {wardImage.length > 0 && (
+                                        <Col
+                                            width={'22px'}
+                                            height={'22px'}
+                                            margin={'1px'}
                                         >
-                                            {itemImage.length > 0 && (
-                                                <Image
-                                                    unoptimized
-                                                    src={itemImage}
-                                                    alt={'champion-item-icon'}
-                                                    className={'square-image'}
-                                                    width={'22px'}
-                                                    height={'22px'}
-                                                />
-                                            )}
-                                        </Row>
-                                    )
-                                })}
+                                            <Image
+                                                unoptimized
+                                                src={isWin ? BLUE_WARD : RED_WARD}
+                                                alt={'champion-ward-icon'}
+                                                className={'square-image'}
+                                                width={'22px'}
+                                                height={'22px'}
+                                            />
+                                        </Col>
+                                    )}
+                                </Col>
                             </Row>
-                            <Col>
-                                {wardImage.length > 0 && (
-                                    <Col className={'item-row'}>
-                                        <Image
-                                            unoptimized
-                                            src={wardImage}
-                                            alt={'champion-ward-icon'}
-                                            className={'square-image'}
-                                            width={'22px'}
-                                            height={'22px'}
-                                        />
-                                    </Col>
-                                )}
-                                {wardImage.length > 0 && (
-                                    <Col
-                                        width={'22px'}
-                                        height={'22px'}
-                                        margin={'1px'}
+                            <Row margin={'6px 0 0'} align={'center'}>
+                                <Col margin={'0 4px 0 0'}>
+                                    <Image
+                                        unoptimized
+                                        src={isWin ? BLUE_WARD : RED_WARD}
+                                        alt={'champion-ward-icon'}
+                                        className={'round-image'}
+                                        width={'16px'}
+                                        height={'16px'}
+                                    />
+                                </Col>
+                                <Col>
+                                    <Text
+                                        color={'#000000'}
+                                        fontSize={'11px'}
+                                        lineHeight={'13px'}
+                                        letterSpacing={'-0.42px'}
                                     >
-                                        {/* TODO: 고정이미지 넣어주기 */}
-                                        <Image
-                                            unoptimized
-                                            src={wardImage}
-                                            alt={'champion-ward-icon'}
-                                            className={'square-image'}
-                                            width={'22px'}
-                                            height={'22px'}
-                                        />
-                                    </Col>
-                                )}
-                            </Col>
-                        </Row>
+                                        제어와드 {visionWardsBought}
+                                    </Text>
+                                </Col>
+                            </Row>
+                        </Col>
                         {/* participants */}
                         <Row width={'170px'}>
                             <MatchTeams gameId={gameId} summonerName={summonerName} />
@@ -361,8 +388,8 @@ function MatchList(props: MatchListProps) {
                             width={'30px'}
                             height={'100px'}
                             margin={'-1px -1px 0 0'}
-                            background={isWin ? COLOR.PERRYWINKLE : COLOR.PINKISH_TAN}
                             border={`1px solid ${isWin ? COLOR.COOL_BLUE : COLOR.BROWNISH_PINK}`}
+                            background={isWin ? COLOR.PERRYWINKLE : COLOR.PINKISH_TAN}
                         >
                         </Col>
                     </MatchItemRow>

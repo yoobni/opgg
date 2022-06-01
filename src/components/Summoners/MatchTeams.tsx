@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
 // Api
-import { getMatchDetail } from "../../api/summoner";
+import { getMatchDetail, Player, Team } from "../../api/summoner";
 // Store
 import { summonerActions } from "../../stores/summoner/summoner";
 // Lib
@@ -40,8 +40,7 @@ function MatchTeams(props: MatchListProps) {
         getMatchTeams();
     }, [summonerName]);
 
-    const onClickSummonerName = (e: MouseEvent, summonerName: string) => {
-        e.preventDefault();
+    const onClickSummonerName = (summonerName: string) => {
         router.push(`/summoners/${summonerName}`);
         dispatch(summonerActions.setSummonerName(summonerName));
     }
@@ -57,19 +56,19 @@ function MatchTeams(props: MatchListProps) {
 
     return (
         <>
-            {teams.map((team: any, index: number) => {
+            {teams.map((team: Team, index: number) => {
                 const {
                     players = [],
                 } = team;
 
                 return (
                     <Col key={`match-team-${index}`} align={'center'} justify={'center'}>
-                        {players.map((summoner: any, summonerIndex: number) => {
+                        {players.map((player: Player, summonerIndex: number) => {
                             const {
                                 champion: {
                                     imageUrl,
                                 },
-                            } = summoner;
+                            } = player;
 
                             return (
                                 <Row key={`match-team-player-${summonerIndex}`} width={'85px'} margin={'1.5px 0'}>
@@ -86,17 +85,17 @@ function MatchTeams(props: MatchListProps) {
                                     <Col
                                         width={'56px'}
                                         margin={'0 13px 0 0'}
-                                        onClick={(e) => onClickSummonerName(e, summoner.summonerName)}
+                                        onClick={() => onClickSummonerName(player.summonerName)}
                                         cursor={'pointer'}
                                     >
                                         <Text
-                                            color={COLOR.GREYNISH_BROWN}
+                                            color={summonerName === player.summonerName ? COLOR.BLACK : COLOR.GREYNISH_BROWN}
                                             fontSize={'11px'}
-                                            fontWeight={summonerName === summoner.summonerName ? 'bold' : 'normal'}
+                                            fontWeight={summonerName === player.summonerName ? 'bold' : 'normal'}
                                             lineHeight={'13px'}
                                             displayOneLine={true}
                                         >
-                                            {summoner.summonerName}
+                                            {player.summonerName}
                                         </Text>
                                     </Col>
                                 </Row>

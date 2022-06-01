@@ -15,6 +15,7 @@ export const COLOR = {
     WARM_GREY3: '#94818d',
     // Black
     BLACK: '#333333',
+    BLACK2: '#000000',
     CHARCOAL: '#242929',
     // BROWN
     GREYNISH_BROWN: '#555555',

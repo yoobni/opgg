@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 import styled from "styled-components";
 // Api
-import { getMatches } from "../../api/summoner";
+import { getMatches, Champion, Position } from "../../api/summoner";
 // Store
 import { AppState } from "../../stores";
 // Lib
-import { MAIN_CONTENT_WIDTH, LINE_POSITION, POSITIONS } from "../../lib/values";
-import {getWinRateWithColor, KDACalculator} from "../../lib/utils";
+import { MAIN_CONTENT_WIDTH, LINE_POSITION } from "../../lib/values";
+import { getWinRateWithColor, KDACalculator } from "../../lib/utils";
 import COLOR from "../../lib/styles/colors";
 import NONE_IMAGE from '../../assets/images/no-champion-image.svg';
 // Component
@@ -141,7 +141,6 @@ function MatchSummary() {
         { name: 'lose', value: losses, fill: COLOR.CORAL },
     ];
 
-
     return (
         <>
             <MatchMenuRow>
@@ -241,7 +240,7 @@ function MatchSummary() {
                     </Col>
                 </InfoRow>
                 <ChampionCol padding={'0 0 0 16px'}>
-                    {championList.map((championIndex: any, index: number) => {
+                    {championList.map((championIndex: number, index: number) => {
                         if (champions[championIndex] == undefined || champions[championIndex] == null) {
                             return (
                                 <Row key={`champion-row-${index}`} margin={'6px 0'} align={'center'}>
@@ -268,7 +267,7 @@ function MatchSummary() {
                             assists,
                             wins,
                             losses,
-                        } = champions[championIndex];
+                        } = champions[championIndex] as Champion;
 
                         const {
                             kda,
@@ -336,7 +335,7 @@ function MatchSummary() {
                             선호 포지션 (랭크)
                         </Text>
                     </Row>
-                    {positions.map((item: { games: number, wins: number, position: POSITIONS }, index: number) => {
+                    {positions.map((item: Position, index: number) => {
                         const {
                             games,
                             wins,

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { GridWrapper, Wrapper, Row, Col, Text } from '../Layout';
+import COLOR from "../../lib/styles/colors";
 
 const MenuCol = styled(Col)`
     margin: 0 20px 0 0;
@@ -12,7 +13,7 @@ const MenuCol = styled(Col)`
 
 export default function Footer() {
     return (
-        <Wrapper padding={'0 0 30px'}>
+        <Wrapper padding={'50px 0 30px'} background={COLOR.BG}>
             <GridWrapper>
                 <Row margin={'0 0 10px'}>
                     <MenuCol>

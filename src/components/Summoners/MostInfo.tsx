@@ -3,7 +3,7 @@ import React, { useEffect, useState, memo } from 'react';
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 // Api
-import { getMostInfo } from "../../api/summoner";
+import {Champion, getMostInfo} from "../../api/summoner";
 // Store
 import { AppState } from "../../stores";
 // Lib
@@ -146,7 +146,7 @@ function MostInfo() {
             </Row>
             {mostViewMode === 'all' ? (
                 <>
-                    {mostChampions.map((data: any, index: number) => {
+                    {mostChampions.map((champion: Champion, index: number) => {
                         const {
                             imageUrl,
                             name,
@@ -156,7 +156,7 @@ function MostInfo() {
                             assists,
                             wins,
                             games,
-                        } = data;
+                        } = champion;
 
                         const {
                             kda,
@@ -216,12 +216,12 @@ function MostInfo() {
                 </>
             ) : (
                 <>
-                    {recentWinRate.map((data: any, index: number) => {
+                    {recentWinRate.map((data: Champion, index: number) => {
                         const {
+                            name,
                             imageUrl,
                             wins,
                             losses,
-                            name,
                         } = data;
 
                         const totalGameCount = wins + losses;

@@ -3,7 +3,7 @@ import React, { useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 // Api
-import { getSummoner } from "../../api/summoner";
+import { getSummoner, PreviousTiers } from "../../api/summoner";
 // Store
 import { AppState } from "../../stores";
 import { summonerActions } from "../../stores/summoner/summoner";
@@ -114,7 +114,7 @@ function ContentHeader() {
             <GridWrapper padding={'0 30px'}>
                 {previousTiers.length > 0 && (
                     <Row padding={'15px 0 0'}>
-                        {previousTiers.slice(0).reverse().map((tiers: any, index: number) => {
+                        {previousTiers.slice(0).reverse().map((tiers: PreviousTiers, index: number) => {
                             const {
                                 season,
                                 tier,
