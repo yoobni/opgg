@@ -23,11 +23,13 @@ export interface LeagueItemProps {
 export interface SummonerState {
     summonerName: string | undefined;
     leagues: LeagueItemProps[];
+    searchKeywordList: string[];
 }
 
 const initialState: SummonerState = {
     summonerName: '',
     leagues: [],
+    searchKeywordList: [],
 };
 
 const summonerSlice = createSlice({
