@@ -2,6 +2,7 @@
 import React, { useEffect, memo } from 'react';
 // Lib
 import COLOR from "../../lib/styles/colors";
+import { getWinRateWithColor } from "../../lib/utils";
 // Component
 import { Row, Col, Text } from "../../components/Layout";
 import { LeagueItemProps } from "../../stores/summoner/summoner";
@@ -26,8 +27,9 @@ function TierItem(props: LeagueItemProps) {
     } = props;
 
     const totalPlay = wins + losses;
-
-    // TODO: 티어 번역필
+    const {
+        winRate,
+    } = getWinRateWithColor(wins, totalPlay);
 
     return (
         <>
@@ -100,7 +102,7 @@ function TierItem(props: LeagueItemProps) {
                                     lineHeight={'15px'}
                                 >
                                     {/* TODO: util or hook */}
-                                    승률 {Math.floor(wins / totalPlay * 100)}%
+                                    승률 {winRate}%
                                 </Text>
                             </Row>
                         </>

@@ -97,7 +97,6 @@ function MostInfo() {
         async function getMostInfoData() {
             const returnData = await getMostInfo({ summonerName });
             setSummonerMostInfo(returnData);
-            // dispatch(updateSummonerLeagues(returnData.summoner.leagues));
         }
 
         getMostInfoData();
@@ -296,7 +295,6 @@ function MostInfo() {
                     })}
                 </>
             )}
-
         </Wrapper>
     );
 }

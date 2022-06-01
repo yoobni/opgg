@@ -79,7 +79,7 @@ function MatchList(props: MatchListProps) {
 
     if (games.length === 0) {
         // TODO: add skeleton component
-        return <></>;
+        return (<></>);
     }
 
     const itemTempList = [0, 1, 2, 3, 4, 5];
@@ -212,7 +212,7 @@ function MatchList(props: MatchListProps) {
                             </Row>
                         </Col>
                         {/* kda */}
-                        <Col grow={1} align={'center'} justify={'center'}>
+                        <Col width={'110px'} align={'center'} justify={'center'}>
                             <Row className={'kda-text'}>
                                 <Text
                                     color={COLOR.WARM_GREY3}
@@ -278,7 +278,7 @@ function MatchList(props: MatchListProps) {
                             )}
                         </Col>
                         {/* stats */}
-                        <Col width={'90px'} align={'center'} justify={'center'}>
+                        <Col width={'85px'} align={'center'} justify={'center'}>
                             <Row>
                                 <Text className={'normal-text'}>
                                     레벨{level}

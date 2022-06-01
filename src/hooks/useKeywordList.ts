@@ -18,7 +18,6 @@ export default function useKeywordList() {
     const addKeywordList = (keyword: string) => {
         const filterKeywordList = checkKeywordList(keyword);
         const newKeywordList = [keyword].concat(filterKeywordList);
-        console.log(newKeywordList);
         localStorage.setItem('searchKeywordList', JSON.stringify(newKeywordList));
         setKeywordList(newKeywordList);
     }

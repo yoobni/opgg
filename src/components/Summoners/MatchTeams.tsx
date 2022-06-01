@@ -47,7 +47,7 @@ function MatchTeams(props: MatchListProps) {
 
     if (gameMatchDetail === null) {
         // TODO: add skeleton component
-        return <></>;
+        return (<></>);
     }
 
     const {

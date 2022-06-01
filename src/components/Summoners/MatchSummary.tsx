@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 import styled from "styled-components";
 // Api
-import { getMatches, Champion, Position } from "../../api/summoner";
+import {getMatches, Champion, Position, Game} from "../../api/summoner";
 // Store
 import { AppState } from "../../stores";
 // Lib
@@ -90,6 +90,7 @@ function MatchSummary() {
     const summonerName = useSelector((state: AppState) => state.summoner.summonerName || '');
     const [summonerMatches, setSummonerMatches] = useState<any>(null);
     const [matchMode, setMatchMode] = useState<string>('all');
+    const [gameList, setGameList] = useState<Game[]>([]);
 
     useEffect(() => {
         if (typeof window !== 'object') {
@@ -99,10 +100,39 @@ function MatchSummary() {
         async function getSummonerMatches() {
             const matchData = await getMatches({ summonerName });
             setSummonerMatches(matchData);
+            setMatchMode('all');
+
+            if (matchData != null) {
+                setGameList(matchData.games);
+            }
         }
 
         getSummonerMatches();
     }, [summonerName]);
+
+    useEffect(() => {
+        if (typeof window !== 'object') {
+            return;
+        }
+
+        if (summonerMatches != null) {
+            let newGameList = [];
+
+            if (matchMode === 'solo') {
+                newGameList = summonerMatches.games.filter((game: Game) => {
+                    return game.gameType === '솔랭';
+                })
+            } else if (matchMode === 'team') {
+                newGameList = summonerMatches.games.filter((game: Game) => {
+                    return game.gameType === '자유 5:5 랭크';
+                })
+            } else {
+                newGameList = summonerMatches.games;
+            }
+
+            setGameList(newGameList);
+        }
+    }, [matchMode]);
 
     if (summonerMatches === null) {
         // TODO: add skeleton component
@@ -119,7 +149,6 @@ function MatchSummary() {
         },
         champions,
         positions,
-        games,
     } = summonerMatches;
 
     const totalGameCount = (wins + losses);
@@ -407,7 +436,7 @@ function MatchSummary() {
                     })}
                 </RankCol>
             </Row>
-            <MatchList games={games} />
+            <MatchList games={gameList} />
         </>
     );
 }
